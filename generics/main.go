@@ -31,3 +31,25 @@ func SumIntsOrFloats[K comparable, V Number](m map[K]V) V {
 	}
 	return s
 }
+
+type List[T any] struct {
+	prev *List[T]
+	val  T
+}
+
+func runList() {
+	integers := List[int]{val: 10}
+	println(integers)
+}
+
+func (l *List[T]) String() string {
+	return fmt.Sprintf("val: %v, prev: %v", l.val, l.prev)
+}
+
+func (l *List[T]) add(element T) {
+	if l.prev != nil {
+		l.prev.add(l.val)
+	}
+	l.prev = &List[T]{val: l.val, prev: l.prev}
+	l.val = element
+}
